@@ -85,3 +85,4 @@ Rails.application.configure do
   config.force_ssl = true
 
 end
+heroku run rake db:migrate
