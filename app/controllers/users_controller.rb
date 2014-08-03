@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
-  before_action :user,            only: [:edit, :update]
-  before_action :signed_in_user,  only: [:edit, :update, :index]
-  before_action :correct_user,    only: [:edit, :update]
-  before_action :admin_user,      only: :destroy
+  before_action :user,                  only: [:edit, :update]
+  before_action :signed_in_user,        only: [:edit, :update, :index]
+  before_action :redirect_to_root,      only: [:new, :create]
+  before_action :correct_user,          only: [:edit, :update]
+  before_action :not_allowed_as_admin,  only: :destroy
 
   def new
     @user = User.new
@@ -13,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page], per_page: 30 ) #bez "per_page: 30" domyślnie jest 30
+    @users = User.order(:id).paginate(page: params[:page], per_page: 30 ) #bez "per_page: 30" domyślnie jest 30
   end
 
    def create
@@ -42,7 +43,7 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User deleted."
-    redirect_to users_url
+    redirect_to root_url
   end
 
   private
@@ -52,7 +53,8 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password,
+                                   :password_confirmation)
     end
 
     # Before filters
@@ -65,6 +67,12 @@ class UsersController < ApplicationController
       end
     end
 
+    def redirect_to_root
+      if signed_in?
+        redirect_to root_url
+      end
+    end
+
     def correct_user
       unless current_user?(@user)
         @user = User.find(params[:id])
@@ -72,7 +80,9 @@ class UsersController < ApplicationController
       end
     end
 
-    def admin_user
-      redirect_to(root_url) unless current_user.admin?
+    def not_allowed_as_admin
+      if current_user.admin?
+        redirect_to(root_url)
+      end
     end
 end

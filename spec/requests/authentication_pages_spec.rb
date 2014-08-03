@@ -41,6 +41,22 @@ describe "Authentication" do
         before { click_link "Sign out" }
         it { should have_link('Sign in') }
       end
+
+      describe "when attempting to visit signup page" do
+        before { visit signup_path }
+        it {
+          # p controller.response.body, controller.response.status
+          # p '000000000000000'
+          # should_not have_title('Sign up')
+          expect(current_path).to eq(root_path)
+           }
+      end
+
+      # describe "submitting a POST request to the Users#create action" do
+      #   before { post users_path }
+      #   specify { expect(current_path).to eq(root_path) }
+      # end
+
     end
   end
 
@@ -49,18 +65,31 @@ describe "Authentication" do
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
 
+      describe "it should not be displyed" do
+        it { should_not have_link('Profile',     href: user_path(user)) }
+        it { should_not have_link('Settings',    href: edit_user_path(user)) }
+      end
+
       describe "when attempting to visit a protected page" do
         before do
           visit edit_user_path(user)
-          fill_in "Email",    with: user.email
-          fill_in "Password", with: user.password
-          click_button "Sign in"
+          fill_signin_form( user )
         end
 
         describe "after signing in" do
 
           it "should render the desired protected page" do
             expect(page).to have_title('Edit user')
+          end
+
+          describe "after signing out and signing in again" do
+            before do
+              sign_out
+              sign_in user
+            end
+            it "should render the users page" do
+              expect(page).to have_title(user.name)
+            end
           end
         end
       end
@@ -110,6 +139,19 @@ describe "Authentication" do
       describe "submitting a DELETE request to the Users#destroy action" do
         before { delete user_path(user) }
         specify { expect(response).to redirect_to(root_url) }
+      end
+    end
+
+    describe "as admin" do
+      let(:user) { FactoryGirl.create(:admin) }
+      before {
+        sign_in( user, no_capybara: true )
+        # post sessions_path, session: {email: user.email, password: 'foobar'}
+      }
+
+      describe "not allow to delete admin" do
+        before { delete user_path(user) }
+        it { expect{ user.reload }.not_to raise_error }
       end
     end
 
