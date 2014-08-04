@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   before_action :signed_in_user,        only: [:edit, :update, :index]
   before_action :redirect_to_root,      only: [:new, :create]
   before_action :correct_user,          only: [:edit, :update]
-  before_action :not_allowed_as_admin,  only: :destroy
+  before_action :not_allowed_as_user,   only: :destroy
+  before_action :admin,                 only: :destroy
 
   def new
     @user = User.new
@@ -80,9 +81,16 @@ class UsersController < ApplicationController
       end
     end
 
-    def not_allowed_as_admin
-      if current_user.admin?
+    def not_allowed_as_user
+      unless current_user.admin?
         redirect_to(root_url)
       end
     end
+
+    def admin
+      if User.find(params[:id]).admin?
+        redirect_to root_url
+      end
+    end
+
 end
