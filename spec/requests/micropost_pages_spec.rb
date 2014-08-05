@@ -27,11 +27,17 @@ describe "MicropostPages" do
       before { fill_in 'micropost_content', with: "Lorem ipsum" }
       it "should create a micropost" do
         expect { click_button "Post" }.to change(Micropost, :count).by(1)
+
       end
-      # describe "should count microposts" do
-        # before { visit root_path }
-        # it { should have_content("1 micropost") }
-      # end
+    end
+    describe "should count microposts" do
+
+      before do
+        fill_in 'micropost_content', with: "Lorem ipsum"
+        click_button "Post"
+        visit root_path
+      end
+      it { should have_content("1 micropost") }
     end
   end
 
@@ -47,19 +53,45 @@ describe "MicropostPages" do
     end
   end
 
-  # describe "pagination" do
+  describe "pagination" do
 
-  #   before(:all) { 30.times { FactoryGirl.create(:micropost, user: user } }
-  #   after(:all)  { user.microposts.delete_all }
+    before(:each) do
+      30.times { FactoryGirl.create(:micropost, user: user) }
+      visit root_path
+    end
 
-  #   it { should have_selector('div.pagination') }
+    it { should have_selector('div.pagination') }
 
-  #   it "should list each micropost" do
-  #     user.microposts.paginate(page: 1).each do |micropost|
-  #       expect(page).to have_selector('li', text: micropost.content)
-  #     end
-  #   end
-  # end
+    it "should list each micropost" do
+      user.microposts.paginate(page: 1).each do |micropost|
+        expect(page).to have_selector('li', text: micropost.content)
+      end
+    end
 
-
+    describe "should count microposts", focus: true do
+      it { should have_content("#{Micropost.count} microposts") }
+    end
+  end
 end
+
+# describe "as wrong user", focus: true do
+#   subject { page }
+#   let(:user) { FactoryGirl.create(:user) }
+#   let(:wrong_user) { FactoryGirl.create(:user) }
+#   before { sign_in wrong_user }
+
+#   describe "create microposts for wrong user" do
+#     before do
+#       FactoryGirl.create(:micropost, user: wrong_user)
+#       sign_out
+#       sign_in user
+
+#       describe "should not see wrong user 'delete' links" do
+#         before { visit user_path(wrong_user) }
+#         it { should_not have_content('delete') }
+
+#       end
+#     end
+#   end
+# end
+
