@@ -28,6 +28,10 @@ describe "MicropostPages" do
       it "should create a micropost" do
         expect { click_button "Post" }.to change(Micropost, :count).by(1)
       end
+      # describe "should count microposts" do
+        # before { visit root_path }
+        # it { should have_content("1 micropost") }
+      # end
     end
   end
 
@@ -42,5 +46,20 @@ describe "MicropostPages" do
       end
     end
   end
+
+  # describe "pagination" do
+
+  #   before(:all) { 30.times { FactoryGirl.create(:micropost, user: user } }
+  #   after(:all)  { user.microposts.delete_all }
+
+  #   it { should have_selector('div.pagination') }
+
+  #   it "should list each micropost" do
+  #     user.microposts.paginate(page: 1).each do |micropost|
+  #       expect(page).to have_selector('li', text: micropost.content)
+  #     end
+  #   end
+  # end
+
 
 end

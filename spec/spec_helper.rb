@@ -21,6 +21,10 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
 
+  config.run_all_when_everything_filtered = true
+  config.filter_run_excluding wip: true
+  config.filter_run focus: true
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
