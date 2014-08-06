@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :user,                  only: [:edit, :update]
-  before_action :signed_in_user,        only: [:edit, :update, :index]
+  before_action :signed_in_user,        only: [:edit, :update, :index,
+                                               :followers, :following]
   before_action :redirect_to_root,      only: [:new, :create]
   before_action :correct_user,          only: [:edit, :update]
   before_action :not_allowed_as_user,   only: :destroy
@@ -47,6 +48,24 @@ class UsersController < ApplicationController
     flash[:success] = "User deleted."
     redirect_to root_url
   end
+
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.followed_users.paginate(page: params[:page], per_page: 10)
+    @users_all = @user.followed_users.all
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page], per_page: 10)
+    @users_all = @user.followers.all
+    render 'show_follow'
+  end
+
+#####################################################################
 
   private
 
