@@ -68,30 +68,31 @@ describe "MicropostPages" do
       end
     end
 
-    describe "should count microposts", focus: true do
-      it { should have_content("#{Micropost.count} microposts") }
+    describe "should count microposts" do
+      it { should have_content("30 microposts") }
     end
   end
+
+  describe "as wrong user" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:wrong_user) { FactoryGirl.create(:user) }
+    before { sign_in wrong_user }
+
+    describe "create microposts for wrong user" do
+      before do
+        FactoryGirl.create(:micropost, user: wrong_user)
+        sign_out
+        sign_in user
+      end
+
+      describe "should not see wrong user 'delete' links" do
+        before { visit user_path(wrong_user) }
+        it { should_not have_content('delete') }
+
+      end
+    end
+  end
+
 end
 
-# describe "as wrong user", focus: true do
-#   subject { page }
-#   let(:user) { FactoryGirl.create(:user) }
-#   let(:wrong_user) { FactoryGirl.create(:user) }
-#   before { sign_in wrong_user }
-
-#   describe "create microposts for wrong user" do
-#     before do
-#       FactoryGirl.create(:micropost, user: wrong_user)
-#       sign_out
-#       sign_in user
-
-#       describe "should not see wrong user 'delete' links" do
-#         before { visit user_path(wrong_user) }
-#         it { should_not have_content('delete') }
-
-#       end
-#     end
-#   end
-# end
 

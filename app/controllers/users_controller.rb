@@ -61,14 +61,6 @@ class UsersController < ApplicationController
 
     # Before filters
 
-    # def signed_in_user
-    #   unless signed_in?
-    #     store_location
-    #     flash[:notice] = "Please sign in."
-    #     redirect_to signin_url
-    #   end
-    # end
-
     def redirect_to_root
       if signed_in?
         redirect_to root_url
