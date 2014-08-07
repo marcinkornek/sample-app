@@ -46,6 +46,11 @@ class User < ActiveRecord::Base
     relationships.find_by(followed_id: other_user.id).destroy
   end
 
+  def self.search(query)
+    where("name ilike ?", "%#{query}%") # ilike zamiast like => nie jest case sensitive
+  end
+
+###########################################################################
 
   private
 

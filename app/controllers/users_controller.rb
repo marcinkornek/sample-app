@@ -17,7 +17,11 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.order(:id).paginate(page: params[:page], per_page: 30 ) #bez "per_page: 30" domyślnie jest 30
+    if params[:search]
+      @users = User.search(params[:search]).order("created_at DESC").paginate(page: params[:page], per_page: 30 )
+    else
+      @users = User.order(:id).paginate(page: params[:page], per_page: 30 ) #bez "per_page: 30" domyślnie jest 30
+    end
   end
 
    def create
