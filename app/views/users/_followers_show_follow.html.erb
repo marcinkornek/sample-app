@@ -1,0 +1,10 @@
+<section>
+  <%= render 'shared/stats' %>
+  <% if @users.any? %>
+    <div class="user_avatars">
+      <% @users_all.each do |user| %>
+        <%= link_to gravatar_for(user, size: 30), user %>
+      <% end %>
+    </div>
+  <% end %>
+</section>

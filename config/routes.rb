@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :relationships, only: [:create, :destroy]
 
   root 'static_pages#home'
+  # match '/users/:id/following', to: 'users#following', via: 'get'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
