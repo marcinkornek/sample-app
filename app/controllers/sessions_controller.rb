@@ -9,7 +9,7 @@ before_action :email?,  only: [:create]
       sign_in @user
       redirect_back_or @user
     else
-      flash.now[:error] = 'Invalid email/password combination' # Not quite right!
+      flash.now[:error] = 'Invalid email/password or username/password combination' # Not quite right!
       render 'new'
     end
   end
