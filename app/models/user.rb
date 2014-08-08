@@ -42,11 +42,11 @@ class User < ActiveRecord::Base
     relationships.create!(followed_id: other_user.id)
   end
 
-  def unfollow!(other_user)
+  def unfollow!(other_user) # wywołuje się ją na instancji => user= User.first , user.unfollow!
     relationships.find_by(followed_id: other_user.id).destroy
   end
 
-  def self.search(query)
+  def self.search(query) #metoda jest na klasie => wywołuije się ją na klasie a nie na instancji czyli User.search
     where("name ilike ?", "%#{query}%") # ilike zamiast like => nie jest case sensitive
   end
 

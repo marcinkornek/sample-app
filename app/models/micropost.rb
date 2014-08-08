@@ -11,4 +11,24 @@ class Micropost < ActiveRecord::Base
     where("user_id IN (#{followed_user_ids}) OR user_id = :user_id",
           user_id: user.id)
   end
+
+  def extract_mentioned_user
+    m = /^@(\w*(-\w+)+-?)/.match(content)
+    if m.nil?
+      nil
+    else
+      name = m[1].split('-').join(' ')
+      User.where(name: name).first
+    end
+  end
+
+  ###################################################################
+
+  private
+
+  #before actions
+
+
+
 end
+

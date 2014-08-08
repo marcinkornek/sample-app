@@ -1,6 +1,6 @@
 class MicropostsController < ApplicationController
-  before_action :signed_in_user, only: [:create, :destroy]
-  before_action :correct_user,   only: [:destroy]
+  before_action :signed_in_user,    only: [:create, :destroy]
+  before_action :correct_user,      only: [:destroy]
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
@@ -22,6 +22,8 @@ class MicropostsController < ApplicationController
 
   private
 
+    #before actions
+
     def micropost_params
       params.require(:micropost).permit(:content)
     end
@@ -30,4 +32,5 @@ class MicropostsController < ApplicationController
       @micropost = Micropost.find_by(id: params[:id])
       redirect_to root_url unless current_user?(@micropost.user)
     end
+
 end

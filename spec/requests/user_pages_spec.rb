@@ -217,7 +217,7 @@ describe "User pages" do
 
   end
 
-  describe "following/followers", focus: true do
+  describe "following/followers" do
     let(:user) { FactoryGirl.create(:user) }
     let(:other_user) { FactoryGirl.create(:user) }
     before { user.follow!(other_user) }

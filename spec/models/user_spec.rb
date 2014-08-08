@@ -204,4 +204,20 @@ describe User do
 
   end
 
+  describe "search" do
+    let(:user_1) { FactoryGirl.create(:user, name: "FiRst user") }
+    let(:user_2) { FactoryGirl.create(:user, name: "Second usEr") }
+    let(:user_3) { FactoryGirl.create(:user, name: "ThirD zsEr") }
+
+    # let(:user) { User.first }
+
+    it "should search right user" do
+
+      expect(User.search('user')).to include(user_1, user_2) # metoda search zwraca tablicę
+      expect(User.search('user')).not_to include(user_3)
+    end
+
+
+  end
+
 end
