@@ -178,6 +178,16 @@ describe User do
     end
   end
 
+  describe "usename with mixed case" do
+    let(:mixed_case_username) { "mArS12AAa" }
+
+    it "should be saved as all lower-case" do
+      @user.username = mixed_case_username
+      @user.save
+      expect(@user.reload.username).to eq mixed_case_username.downcase
+    end
+  end
+
   describe "micropost associations" do
 
     before { @user.save }

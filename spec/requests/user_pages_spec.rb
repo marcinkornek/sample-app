@@ -251,7 +251,32 @@ describe "User pages" do
     end
   end
 
+describe "sign in" do
+  let(:user) { FactoryGirl.create(:user) }
 
+  context "with email" do
+    before do
+      visit signin_path
+      fill_in "Email",    with: user.email
+      fill_in "Password", with: user.password
+      click_button "Sign in"
+    end
+
+    it { should have_title(user.name) }
+  end
+
+  context "with username" do
+    before do
+      visit signin_path
+      fill_in "Email",    with: user.username
+      fill_in "Password", with: user.password
+      click_button "Sign in"
+    end
+
+    it { should have_title(user.name) }
+  end
+
+end
 
 
 

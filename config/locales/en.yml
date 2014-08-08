@@ -21,3 +21,13 @@
 
 en:
   hello: "Hello world"
+
+  helpers:
+    label:
+      session:
+        email: 'Email/Username'
+
+  # activerecord:
+  #   attributes:
+  #     user:
+  #       email: "Email/Username"
