@@ -39,10 +39,18 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
-      redirect_to @user
+    if @user.authenticate(params[:user][:password])
+      if @user.update_attributes(user_params)
+        flash[:success] = "Profile updated"
+        redirect_to @user
+        # redirect_to edit_user_path(user)
+      else
+        render 'edit'
+      end
     else
+
+      @user.assign_attributes(user_params)
+      flash.now[:error] = 'Invalid password'
       render 'edit'
     end
   end
