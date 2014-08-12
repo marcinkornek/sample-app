@@ -16,6 +16,7 @@ before_action :email?,  only: [:create]
 
   def destroy
     sign_out
+    flash[:notice] = "You are signed out"
     redirect_to root_url
   end
 

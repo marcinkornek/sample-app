@@ -3,6 +3,7 @@ class Micropost < ActiveRecord::Base
   default_scope -> { order('created_at DESC') }
   validates :content, presence: true, length: { maximum: 140 }
   validates :user_id, presence: true
+  before_save :set_in_reply_to
 
   # Returns microposts from the users being followed by the given user.
   def self.from_users_followed_by(user)
@@ -28,7 +29,12 @@ class Micropost < ActiveRecord::Base
 
   #before actions
 
-
+  def set_in_reply_to
+    # p extract_mentioned_user
+    # p extract_mentioned_user.try(:id)
+    # p '-----------------------------------'
+    self.in_reply_to = extract_mentioned_user.try(:id)
+  end
 
 end
 

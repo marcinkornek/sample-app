@@ -13,6 +13,11 @@ gem 'bootstrap-will_paginate', '0.0.9'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.0.rc1'
+  gem 'quiet_assets' #nie wyświetla requestów o assety w logu "rails s"
+  gem 'guard-rspec', '2.5.0'
+  gem 'spork-rails', '4.0.0'
+  gem 'guard-spork', '1.5.0'
+  gem 'childprocess', '0.3.6'
 end
 
 group :test do
