@@ -37,6 +37,15 @@ describe Micropost do
     context 'there is mentioned user' do
       before {  }
 
+      context 'user with 1-word name' do
+        let(:user) { FactoryGirl.create(:user,name: 'marcin' ) }
+        let(:content) { '@marcin lolz' }
+
+        it 'returns mentioned user' do
+          expect(micropost.extract_mentioned_user).to eq(user)
+        end
+      end
+
       context 'user with 2-word name' do
         let(:user) { FactoryGirl.create(:user,name: 'asd asdasd' ) }
         let(:content) { '@asd-asdasd lolz' }

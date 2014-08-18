@@ -17,6 +17,7 @@ class UsersController < ApplicationController
       sign_in @user
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @user
+      # redirect_to(default)
     else
       render 'new'
     end
@@ -50,7 +51,8 @@ class UsersController < ApplicationController
     else
 
       @user.assign_attributes(user_params)
-      flash.now[:error] = 'Invalid password'
+      # flash.now[:error] = 'Invalid password'
+      @user.errors.add(:password, :invalid) #:invalid jest standardowym błędem, sa też inne
       render 'edit'
     end
   end

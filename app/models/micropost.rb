@@ -14,7 +14,7 @@ class Micropost < ActiveRecord::Base
   end
 
   def extract_mentioned_user
-    m = /^@(\w*(-\w+)+-?)/.match(content)
+    m = /^@(\w*(?:-\w+)*)/.match(content)
     if m.nil?
       nil
     else

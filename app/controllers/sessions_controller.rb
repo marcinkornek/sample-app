@@ -1,15 +1,17 @@
 class SessionsController < ApplicationController
 before_action :email?,  only: [:create]
   def new
-
+    @user = User.new
   end
 
   def create
-    if @user && @user.authenticate(params[:session][:password])
+    if @user && @user.authenticate(params[:user][:password])
       sign_in @user
       redirect_back_or @user
     else
-      flash.now[:error] = 'Invalid email/password or username/password combination' # Not quite right!
+      @user ||= User.new
+      @user.errors.add(:email, :email_password) #:invalid jest standardowym błędem, sa też inne, niestandardowe błędy można samemu wpisać w en.yml
+      # flash.now[:emailrror] = 'Invalid email/password or username/password combination' # Not quite right!
       render 'new'
     end
   end
@@ -35,7 +37,7 @@ before_action :email?,  only: [:create]
   end
 
   def email
-    params[:session][:email].downcase
+    params[:user][:email].downcase
   end
 
 end

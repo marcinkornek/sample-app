@@ -24,6 +24,7 @@ describe "User pages" do
       it "should list each user" do
         User.paginate(page: 1).each do |user|
           expect(page).to have_selector('li', text: user.name)
+          expect(page).to have_selector('li', text: user.microposts.count)
         end
       end
     end
@@ -178,6 +179,7 @@ describe "User pages" do
       it { should have_content("Update your profile") }
       it { should have_title("Edit user") }
       it { should have_link('change', href: 'http://gravatar.com/emails') }
+      # it { should have_link('change password',  ) }
     end
 
     describe "with invalid information" do

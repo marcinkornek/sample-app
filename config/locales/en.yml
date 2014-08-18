@@ -27,4 +27,11 @@ en:
       session:
         email: 'Email/Username'
 
+# własne errory
+  # errors:
+  #   messages:
+  #     kotki: lol
 
+  errors:
+    messages:
+      email_password: 'Invalid email/password or username/password combination'
