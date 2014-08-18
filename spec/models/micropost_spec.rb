@@ -3,7 +3,10 @@ require 'spec_helper'
 describe Micropost do
 
   let(:user) { FactoryGirl.create(:user) }
-  before { @micropost = user.microposts.build(content: "Lorem ipsum") }
+  before {
+    User.all.destroy_all
+    @micropost = user.microposts.build(content: "Lorem ipsum")
+  }
 
   subject { @micropost }
 
@@ -35,40 +38,49 @@ describe Micropost do
     let(:micropost) { Micropost.new(content: content) }
 
     context 'there is mentioned user' do
-      before {  }
+      # before {  }
 
-      context 'user with 1-word name' do
-        let(:user) { FactoryGirl.create(:user,name: 'marcin' ) }
-        let(:content) { '@marcin lolz' }
-
-        it 'returns mentioned user' do
-          expect(micropost.extract_mentioned_user).to eq(user)
-        end
-      end
-
-      context 'user with 2-word name' do
-        let(:user) { FactoryGirl.create(:user,name: 'asd asdasd' ) }
-        let(:content) { '@asd-asdasd lolz' }
+      context 'user with username' do
+        let(:user) { FactoryGirl.create(:user, username: 'marcin12' ) }
+        let(:content) { '@marcin12 lolz' }
 
         it 'returns mentioned user' do
           expect(micropost.extract_mentioned_user).to eq(user)
         end
       end
 
-      context 'user with 3-word name' do
-        let(:user) { FactoryGirl.create(:user,name: 'asd asdasd asd') }
-        let(:content) { '@asd-asdasd-asd lolz' }
+      # context 'user with 1-word name' do
+      #   let(:user) { FactoryGirl.create(:user,name: 'marcin' ) }
+      #   let(:content) { '@marcin lolz' }
 
-        it 'handles correctly more than two words' do
-          expect(micropost.extract_mentioned_user).to eq(user)
-        end
-      end
+      #   it 'returns mentioned user' do
+      #     expect(micropost.extract_mentioned_user).to eq(user)
+      #   end
+      # end
+
+    #   context 'user with 2-word name' do
+    #     let(:user) { FactoryGirl.create(:user,name: 'asd asdasd' ) }
+    #     let(:content) { '@asd-asdasd lolz' }
+
+    #     it 'returns mentioned user' do
+    #       expect(micropost.extract_mentioned_user).to eq(user)
+    #     end
+    #   end
+
+    #   context 'user with 3-word name' do
+    #     let(:user) { FactoryGirl.create(:user,name: 'asd asdasd asd') }
+    #     let(:content) { '@asd-asdasd-asd lolz' }
+
+    #     it 'handles correctly more than two words' do
+    #       expect(micropost.extract_mentioned_user).to eq(user)
+    #     end
+    #   end
     end
 
     context 'without mentioned user' do
 
-      context 'with non existant user name' do
-        let(:user) { FactoryGirl.create(:user,name: 'asd asdasd' ) }
+      context 'with non existant username' do
+        let(:user) { FactoryGirl.create(:user,username: 'asdasdasd' ) }
         let(:content) { '@ccc-cccccc lolz' }
 
         it 'returns nil' do
@@ -77,7 +89,7 @@ describe Micropost do
       end
 
       context 'with email in content' do
-        let(:user) { FactoryGirl.create(:user,name: 'asd asdasd' ) }
+        let(:user) { FactoryGirl.create(:user,username: 'asdasdasd' ) }
         let(:content) { 'asassa-aa@ccc.pl lolz' }
 
         it "doesn't crash with emails" do
@@ -86,4 +98,32 @@ describe Micropost do
       end
     end
   end
+
+  describe 'in-reply-to function' do
+    before do
+      @user = FactoryGirl.create(:user)
+      @other_user = FactoryGirl.create(:user, username: 'username_mars')
+    end
+
+    describe 'micropost with content including user name' do
+      before do
+        @user.microposts.create(content: "@username_mars asdasfasfdasda")
+      end
+
+      it 'shoud have user id in in-reply-to column' do
+        expect(@user.microposts.first.in_reply_to).to eq(@other_user.id)
+      end
+    end
+
+     describe 'micropost without content including user name' do
+      before do
+        @user.microposts.create(content: "@other_username asdasfasfdasda")
+      end
+
+      it "shoud have 'nil' in in-reply-to column" do
+        expect(@user.microposts.first.in_reply_to).to eq(nil)
+      end
+    end
+  end
+
 end

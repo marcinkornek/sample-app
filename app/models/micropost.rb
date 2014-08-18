@@ -4,6 +4,8 @@ class Micropost < ActiveRecord::Base
   validates :content, presence: true, length: { maximum: 140 }
   validates :user_id, presence: true
   before_save :set_in_reply_to
+  # scope :all ->
+  scope :without_private_messages, -> { where(in_reply_to: nil) }
 
   # Returns microposts from the users being followed by the given user.
   def self.from_users_followed_by(user)
@@ -14,12 +16,13 @@ class Micropost < ActiveRecord::Base
   end
 
   def extract_mentioned_user
-    m = /^@(\w*(?:-\w+)*)/.match(content)
+    # m = /^@(\w*(?:-\w+)*)/.match(content)
+    m = /^@(\S*)/.match(content.downcase)
     if m.nil?
       nil
     else
-      name = m[1].split('-').join(' ')
-      User.where(name: name).first
+      username = m[1]
+      User.find_by(username: username)
     end
   end
 

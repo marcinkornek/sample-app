@@ -27,11 +27,10 @@ describe "MicropostPages" do
       before { fill_in 'micropost_content', with: "Lorem ipsum" }
       it "should create a micropost" do
         expect { click_button "Post" }.to change(Micropost, :count).by(1)
-
       end
     end
-    describe "should count microposts" do
 
+    describe "should count microposts" do
       before do
         fill_in 'micropost_content', with: "Lorem ipsum"
         click_button "Post"
