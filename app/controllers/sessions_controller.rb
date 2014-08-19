@@ -11,7 +11,6 @@ before_action :email?,  only: [:create]
     else
       @user ||= User.new
       @user.errors.add(:email, :email_password) #:invalid jest standardowym błędem, sa też inne, niestandardowe błędy można samemu wpisać w en.yml
-      # flash.now[:emailrror] = 'Invalid email/password or username/password combination' # Not quite right!
       render 'new'
     end
   end
