@@ -6,16 +6,17 @@ class Micropost < ActiveRecord::Base
 
   validate :valid_user_in_private_message  # Custom validation
 
-  # before_validation :set_in_reply_to
+  before_validation :set_in_reply_to
   scope :without_private_messages, -> { where(in_reply_to: nil) }
   # scope :received_private_messages, -> (user_id) { where(in_reply_to: user_id) }
   scope :received_private_messages, -> (user_id) { where('in_reply_to = ?', user_id) }
+  scope :sended_private_messages, -> (user_id) { where('user_id = ? AND in_reply_to IS NOT NULL ', user_id)}
 
   # Returns microposts from the users being followed by the given user.
   def self.posts_for_feed(user)
     followed_user_ids = "SELECT followed_id FROM relationships
                          WHERE follower_id = :user_id"
-    where("user_id IN (#{followed_user_ids}) OR user_id = :user_id OR in_reply_to = :user_id",
+    where("user_id IN (#{followed_user_ids} AND in_reply_to IS NULL) OR user_id = :user_id OR in_reply_to = :user_id",
           user_id: user.id)
   end
 

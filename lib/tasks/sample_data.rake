@@ -9,7 +9,7 @@ namespace :db do
   end
 
   def make_users
-    puts "---------made users--------"
+    puts "---------made users--------------------"
     User.create!(username: "Username",
                  name: "Example User",
                  email: "example@railstutorial.org",
@@ -30,7 +30,7 @@ namespace :db do
   end
 
   def make_microposts
-    puts "---------made microposts--------"
+    puts "---------made microposts---------------"
     users = User.all.limit(6)
     50.times do
       content = Faker::Lorem.sentence(5)
@@ -39,7 +39,7 @@ namespace :db do
   end
 
   def make_relationships
-    puts "---------made relationships--------"
+    puts "---------made relationships------------"
     users = User.all
     user  = users.first
     followed_users = users[2..50]

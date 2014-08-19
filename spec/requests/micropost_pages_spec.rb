@@ -42,54 +42,79 @@ describe "MicropostPages" do
       describe 'with valid information' do
         before do
           @user = FactoryGirl.create(:user)
-          @mentioned_user = FactoryGirl.create(:user, username: 'username_mars')
+          @mentioned_user = FactoryGirl.create(:user, username: 'exist_username')
           @other_user = FactoryGirl.create(:user)
           sign_in @user
           visit root_path
-          fill_in 'micropost_content', with: "@username_mars asadsad"
+          fill_in 'micropost_content', with: "@exist_username random text"
           click_button "Post"
         end
 
-        context 'in User home page' do
+        context 'signed in User' do
 
-          it { should have_content("1 micropost") }
-          it { should have_content("0 received private micropost") }
-          it { should have_content("@username_mars asadsad") }
+          context 'in User home page' do
+            it { should have_content("0 microposts") }
+            it { should have_content("0 received private microposts") }
+            it { should have_content("1 sended private micropost") }
+            it { should have_content("@exist_username random text") }
+          end
+
+          context 'in User users page' do
+            before { visit user_path(@user) }
+            it { should_not have_content("Microposts (1)") }
+            it { should_not have_content("@exist_username random text") }
+          end
+
+          context 'in Mentioned user users page' do
+            before { visit user_path(@mentioned_user) }
+            it { should_not have_content("Microposts (1)") }
+            it { should_not have_content("@exist_username random text") }
+          end
+
+          context 'in Other user users page' do
+            before { visit user_path(@other_user) }
+            it { should_not have_content("Microposts (1)") }
+            it { should_not have_content("@exist_username random text") }
+          end
         end
 
-        context 'in Mentioned user home page' do
+        context 'signed_in Mentioned user in Mentioned user home page' do
           before do
             sign_out
-            sign_in @mentioned_user, no_capybara: true
+            sign_in @mentioned_user
             visit root_path
+            # p '--------------------'
+            # puts page.html
+            # p '--------------------'
           end
 
           it { should have_content("0 microposts") }
           it { should have_content("1 received private micropost")}
-          it { should have_content("@username_mars asadsad") }
+          it { should have_content("0 sended private microposts") }
+          it { should have_content("@exist_username random text") }
         end
 
-         context 'in Other user home page' do
+         context 'signed_in Other user in Other user home page' do
           before do
             sign_out
-            sign_in @other_user, no_capybara: true
+            sign_in @other_user
             visit root_path
           end
 
           it { should have_content("0 microposts") }
           it { should have_content("0 received private microposts")}
-          it { should_not have_content("@username_mars asadsad") }
+          it { should have_content("0 sended private microposts") }
+          it { should_not have_content("@exist_username random text") }
         end
       end
 
 
-
       describe 'with invalid information' do
         before do
-          @mentioned_user = FactoryGirl.create(:user, username: 'username_mars')
+          @mentioned_user = FactoryGirl.create(:user, username: 'exist_username')
           @user = FactoryGirl.create(:user)
           visit root_path
-          fill_in 'micropost_content', with: "@invalid_username asadsad"
+          fill_in 'micropost_content', with: "@non_exist_username random text"
           click_button "Post"
         end
 

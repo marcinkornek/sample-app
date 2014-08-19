@@ -102,12 +102,12 @@ describe Micropost do
   describe 'in-reply-to function' do
     before do
       @user = FactoryGirl.create(:user)
-      @other_user = FactoryGirl.create(:user, username: 'username_mars')
+      @other_user = FactoryGirl.create(:user, username: 'exist_username')
     end
 
     describe 'micropost with content including user name' do
       before do
-        @user.microposts.create(content: "@username_mars asdasfasfdasda")
+        @user.microposts.create(content: "@exist_username random text")
       end
 
       it 'shoud have user id in in-reply-to column' do
@@ -117,13 +117,36 @@ describe Micropost do
 
      describe 'micropost without content including user name' do
       before do
-        @user.microposts.create(content: "@other_username asdasfasfdasda")
+        @user.microposts.create(content: "@non_exist_username random text")
       end
 
       it "shoud have 'nil' in in-reply-to column" do
         expect(@user.microposts.first.in_reply_to).to eq(nil)
       end
     end
+  end
+
+  describe 'valid_user_in_private_message validation' do
+    before do
+      @user = FactoryGirl.create(:user)
+      @mentioned_user = FactoryGirl.create(:user, username: 'exist_username')
+    end
+
+    context 'with content with exist username' do
+      subject { Micropost.new(content: "@exist_username random text", user: @user)}
+      it { should be_valid }
+    end
+
+    context 'with content with text' do
+      subject { Micropost.new(content: "random text", user: @user)}
+      it { should be_valid }
+    end
+
+    context 'with content with non-exist username' do
+      subject { Micropost.new(content: "@non_exist_username random text", user: @user)}
+      it { should_not be_valid }
+    end
+
   end
 
 end
