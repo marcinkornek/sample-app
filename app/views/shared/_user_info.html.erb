@@ -7,6 +7,6 @@
 </span>
 <span>
   <%= pluralize(current_user.microposts.without_private_messages.count, "micropost")%>
-  <%= ", " + pluralize(current_user.microposts.count - current_user.microposts.without_private_messages.count, "private micropost") %>
+  <%= ", " + pluralize(Micropost.received_private_messages(current_user.id).count, "received private micropost") %>
 
 </span>

@@ -34,10 +34,70 @@ describe "MicropostPages" do
       before do
         fill_in 'micropost_content', with: "Lorem ipsum"
         click_button "Post"
-        visit root_path
       end
       it { should have_content("1 micropost") }
     end
+
+    describe 'private message' do
+      describe 'with valid information' do
+        before do
+          @user = FactoryGirl.create(:user)
+          @mentioned_user = FactoryGirl.create(:user, username: 'username_mars')
+          @other_user = FactoryGirl.create(:user)
+          sign_in @user
+          visit root_path
+          fill_in 'micropost_content', with: "@username_mars asadsad"
+          click_button "Post"
+        end
+
+        context 'in User home page' do
+
+          it { should have_content("1 micropost") }
+          it { should have_content("0 received private micropost") }
+          it { should have_content("@username_mars asadsad") }
+        end
+
+        context 'in Mentioned user home page' do
+          before do
+            sign_out
+            sign_in @mentioned_user, no_capybara: true
+            visit root_path
+          end
+
+          it { should have_content("0 microposts") }
+          it { should have_content("1 received private micropost")}
+          it { should have_content("@username_mars asadsad") }
+        end
+
+         context 'in Other user home page' do
+          before do
+            sign_out
+            sign_in @other_user, no_capybara: true
+            visit root_path
+          end
+
+          it { should have_content("0 microposts") }
+          it { should have_content("0 received private microposts")}
+          it { should_not have_content("@username_mars asadsad") }
+        end
+      end
+
+
+
+      describe 'with invalid information' do
+        before do
+          @mentioned_user = FactoryGirl.create(:user, username: 'username_mars')
+          @user = FactoryGirl.create(:user)
+          visit root_path
+          fill_in 'micropost_content', with: "@invalid_username asadsad"
+          click_button "Post"
+        end
+
+        it { should have_selector('div.alert.alert-error') } #it should return error message
+        # it {expect { click_button 'Post' }.to_not change(Micropost, :count)}
+      end
+    end
+
   end
 
   describe "micropost destruction" do

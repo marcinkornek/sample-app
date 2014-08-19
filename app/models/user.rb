@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   end
 
   def feed
-    Micropost.from_users_followed_by(self)
+    Micropost.posts_for_feed(self)
   end
 
   def following?(other_user)

@@ -17,7 +17,6 @@ class UsersController < ApplicationController
       sign_in @user
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @user
-      # redirect_to(default)
     else
       render 'new'
     end
@@ -34,6 +33,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @microposts = @user.microposts.without_private_messages.paginate(page: params[:page], per_page: 20)
+    @private_microposts = @user.microposts.received_private_messages(@user.id).paginate(page: params[:page], per_page: 20)
   end
 
   def edit
