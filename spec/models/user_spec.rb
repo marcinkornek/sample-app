@@ -262,7 +262,7 @@ describe User do
       @user.destroy
       expect(relationships).not_to be_empty
       relationships.each do |relationship|
-        expect(Relationship.where(id: relationship.id)).to be_empty
+      expect(Relationship.where(id: relationship.id)).to be_empty
       end
     end
 
@@ -280,8 +280,19 @@ describe User do
       expect(User.search('user')).to include(user_1, user_2) # metoda search zwraca tablicę
       expect(User.search('user')).not_to include(user_3)
     end
-
-
   end
+
+  describe "#generate_password_reset_token", focus: true do
+    before do
+      @user = FactoryGirl.create(:user)
+      @user.generate_password_reset_token
+      # p @user.password_reset_token
+      # p @user.password_reset_sent_at
+    end
+
+    it { expect(@user.password_reset_token).not_to be_empty }
+    it { expect(@user.password_reset_sent_at).not_to be_blank } ## czy tak może być??
+  end
+
 
 end

@@ -92,9 +92,13 @@ class User < ActiveRecord::Base
 
   def send_password_reset
     # update_attributes!(password_reset_token: User.new_remember_token,password_reset_sent_at: Time.zone.now)
+    generate_password_reset_token
+    UserMailer.password_reset(self).deliver
+  end
+
+  def generate_password_reset_token
     update_column('password_reset_token', User.new_remember_token)
     update_column('password_reset_sent_at', Time.zone.now)
-    UserMailer.password_reset(self).deliver
   end
 
 ###########################################################################

@@ -8,6 +8,8 @@ describe "Authentication" do
     before { visit signin_path }
 
     it { should have_content('Sign in') }
+    it { should have_content('Remember me') }
+    it { should have_link('forgotten password?', href: password_resets_new_path) }
     it { should have_title('Sign in') }
   end
 

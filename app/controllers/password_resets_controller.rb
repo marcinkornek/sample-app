@@ -10,7 +10,7 @@ class PasswordResetsController < ApplicationController
     user = User.find_by_email(params[:email])
     user.send_password_reset if user
     redirect_to root_url
-    flash[:notice] = "Email sent with password reset instructions."
+    flash[:success] = "Email sent with password reset instructions."
   end
 
   def edit
@@ -25,7 +25,7 @@ class PasswordResetsController < ApplicationController
 
     elsif @user.update_attributes(session_params)
       redirect_to root_url
-      flash[:notice] = "Password has been reset!"
+      flash[:success] = "Password has been reset!"
     else
       render :edit
     end
