@@ -25,10 +25,42 @@ class User < ActiveRecord::Base
                         format: { with: VALID_USERNAME_REGEX }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(?:\.[a-z\d\-]+)*\.[a-z]+\z/i
-validates :email,     presence: true,
+  validates :email,     presence: true,
                         format: { with: VALID_EMAIL_REGEX },
                         uniqueness: { case_sensitive: false }
   validates :password,  length: { minimum: 6 }#, if: lambda {|u| u.password.present?}
+
+  # state_machine initial: :unverified_email do
+  #   state :unverified_email, value: unverified
+  #   state :verified_email, value: 1
+
+  #   event :verify do
+  #     transition :unverified_email => :verified_email
+  #   end
+
+  #   event :unverify do
+  #     transition :verified => :unverified
+  #   end
+  # end
+
+  state_machine :state, :initial => :unverified, :action => :bypass_validation do
+
+    event :verify do
+      transition :unverified => :verified
+    end
+
+    event :unverify do
+      transition :verified => :unverified
+    end
+  end
+
+  def bypass_validation
+    if self.changes['state'][1] == 'verified'
+      save!(:validate => false)
+    else
+      save!(:validate => true)
+    end
+  end
 
   def User.new_remember_token
     SecureRandom.urlsafe_base64
