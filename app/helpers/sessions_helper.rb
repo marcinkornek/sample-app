@@ -4,10 +4,8 @@ module SessionsHelper
     remember_token = User.new_remember_token
     # cookies.permanent[:remember_token] = remember_token
     if params[:user][:remember_me]
-      p 'perm-------------------------------------'
       cookies.permanent[:remember_token] = remember_token
     else
-      p 'norm-------------------------------------'
       cookies[:remember_token] = remember_token
     end
     user.update_attribute(:remember_token, User.digest(remember_token))
