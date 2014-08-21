@@ -10,9 +10,10 @@ Rails.application.routes.draw do
   resources :microposts,    only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
   resources :password_resets
+  resources :feed_items
 
   root 'static_pages#home'
-  # match '/users/:id/following', to: 'users#following', via: 'get'
+  # match '/users/:id/following', to: 'users#following', via: 'get'  # to można by dać zamiast resources :users do member do get :following end end
   match '/signup',         to: 'users#new',               via: 'get'
   match '/signin',         to: 'sessions#new',            via: 'get'
   match '/signout',        to: 'sessions#destroy',        via: 'delete'
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
   match '/about',          to: 'static_pages#about',      via: 'get'
   match '/contact',        to: 'static_pages#contact',    via: 'get'
   match '/activate/:token',to: 'users#activate_account',  via: 'get', as: :activate_account
+  match '/feed',           to: 'microposts#index',        via: 'get', as: :feed, defaults: { :format => 'atom' }
 
 
   # The priority is based upon order of creation: first created -> highest priority.
