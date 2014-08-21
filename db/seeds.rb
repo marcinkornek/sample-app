@@ -11,4 +11,5 @@ User.create!(username: "mars",
              email: "mars124@o2.pl",
              password: "foobar",
              password_confirmation: "foobar",
-             admin: true)
+             admin: true,
+             state: 'verified')

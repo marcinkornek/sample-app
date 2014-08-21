@@ -14,9 +14,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      @user.send_activation_token
+      # sign_in @user
+      # flash[:success] = "Welcome to the Sample App!"
+      flash[:notice] = "Check your email to confirm registration!"
+      redirect_to root_url
     else
       render 'new'
     end
@@ -77,6 +79,18 @@ class UsersController < ApplicationController
     @users = @user.followers.paginate(page: params[:page], per_page: 10)
     @users_all = @user.followers.all
     render :show_follow
+  end
+
+  def activate_account
+    @user = User.find_by!(activate_email_token: params[:token])
+    if @user.activate_email_sent_at < 2.hours.ago
+      redirect_to root_path
+      flash[:alert] = "Activation email expired."
+    else
+      @user.verify
+      redirect_to root_path
+      flash[:success] = "Acount has been activated!"
+    end
   end
 
 #####################################################################

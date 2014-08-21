@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 20140820073151) do
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
     t.string   "state"
+    t.string   "activate_email_token"
+    t.datetime "activate_email_sent_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

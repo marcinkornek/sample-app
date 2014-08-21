@@ -282,7 +282,7 @@ describe User do
     end
   end
 
-  describe "#generate_password_reset_token", focus: true do
+  describe "#generate_password_reset_token" do
     before do
       @user = FactoryGirl.create(:user)
       @user.generate_password_reset_token

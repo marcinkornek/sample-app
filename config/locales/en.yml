@@ -35,3 +35,4 @@ en:
   errors:
     messages:
       email_password: 'Invalid email/password or username/password combination'
+      unverified: 'User email is not verified. Please check your email to confirm registration.'

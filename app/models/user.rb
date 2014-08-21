@@ -30,19 +30,6 @@ class User < ActiveRecord::Base
                         uniqueness: { case_sensitive: false }
   validates :password,  length: { minimum: 6 }#, if: lambda {|u| u.password.present?}
 
-  # state_machine initial: :unverified_email do
-  #   state :unverified_email, value: unverified
-  #   state :verified_email, value: 1
-
-  #   event :verify do
-  #     transition :unverified_email => :verified_email
-  #   end
-
-  #   event :unverify do
-  #     transition :verified => :unverified
-  #   end
-  # end
-
   state_machine :state, :initial => :unverified, :action => :bypass_validation do
 
     event :verify do
@@ -91,7 +78,6 @@ class User < ActiveRecord::Base
   end
 
   def send_password_reset
-    # update_attributes!(password_reset_token: User.new_remember_token,password_reset_sent_at: Time.zone.now)
     generate_password_reset_token
     UserMailer.password_reset(self).deliver
   end
@@ -99,6 +85,16 @@ class User < ActiveRecord::Base
   def generate_password_reset_token
     update_column('password_reset_token', User.new_remember_token)
     update_column('password_reset_sent_at', Time.zone.now)
+  end
+
+  def send_activation_token
+    generate_activation_token
+    UserMailer.confirm_email(self).deliver
+  end
+
+  def generate_activation_token
+    update_column('activate_email_token', User.new_remember_token)
+    update_column('activate_email_sent_at', Time.zone.now)
   end
 
 ###########################################################################

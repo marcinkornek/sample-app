@@ -1,16 +1,23 @@
 class SessionsController < ApplicationController
 before_action :email?,  only: [:create]
+# before_action :check_email_confirmation, only: [:create]
+
   def new
     @user = User.new
   end
 
   def create
     if @user && @user.authenticate(params[:user][:password])
-      sign_in @user
-      redirect_back_or @user
+      if @user.verified?
+        sign_in @user
+        redirect_back_or @user
+      else
+        @user.errors.add(:base, :unverified) #:invalid jest standardowym błędem, sa też inne, niestandardowe błędy można samemu wpisać w en.yml
+        render 'new'
+      end
     else
       @user ||= User.new
-      @user.errors.add(:email, :email_password) #:invalid jest standardowym błędem, sa też inne, niestandardowe błędy można samemu wpisać w en.yml
+      @user.errors.add(:base, :email_password) #:invalid jest standardowym błędem, sa też inne, niestandardowe błędy można samemu wpisać w en.yml
       render 'new'
     end
   end

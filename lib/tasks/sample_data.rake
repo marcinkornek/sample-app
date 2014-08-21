@@ -9,13 +9,14 @@ namespace :db do
   end
 
   def make_users
-    puts "---------made users--------------------"
+    puts "---------creating users--------------------"
     User.create!(username: "Username",
                  name: "Example User",
                  email: "example@railstutorial.org",
                  password: "foobar",
                  password_confirmation: "foobar",
-                 admin: true)
+                 admin: true,
+                 state: 'verified')
     99.times do |n|
       username  = "Username_#{n+1}"
       name  = Faker::Name.name
@@ -25,12 +26,13 @@ namespace :db do
                    name: name,
                    email: email,
                    password: password,
-                   password_confirmation: password)
+                   password_confirmation: password,
+                   state: 'verified')
     end
   end
 
   def make_microposts
-    puts "---------made microposts---------------"
+    puts "---------creating microposts---------------"
     users = User.all.limit(6)
     50.times do
       content = Faker::Lorem.sentence(5)
@@ -39,7 +41,7 @@ namespace :db do
   end
 
   def make_relationships
-    puts "---------made relationships------------"
+    puts "---------creating relationships------------"
     users = User.all
     user  = users.first
     followed_users = users[2..50]
@@ -49,7 +51,7 @@ namespace :db do
   end
 
   def make_private_microposts
-    puts "---------made private microposts--------"
+    puts "---------creating private microposts--------"
     users = User.all.limit(6)
     5.times do |n|
       n += 1

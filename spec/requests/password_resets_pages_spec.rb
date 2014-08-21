@@ -24,7 +24,7 @@ subject { page }
 
     describe 'with valid email' do
       before do
-        puts page.html
+        # puts page.html
         fill_in "Email", with: "valid_email@email.com"
         click_button "Reset Password"
       end

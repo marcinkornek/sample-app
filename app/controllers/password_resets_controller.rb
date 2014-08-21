@@ -2,9 +2,9 @@ class PasswordResetsController < ApplicationController
   def new
   end
 
-  def send_password_reset
+  # def send_password_reset
 
-  end
+  # end
 
   def create
     user = User.find_by_email(params[:email])

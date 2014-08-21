@@ -29,38 +29,37 @@ describe "Authentication" do
     end
 
     describe "with valid information" do
-      let(:user) { FactoryGirl.create(:user) }
-      before { sign_in user }
+      context 'After email confirmation' do
+        let(:user) { FactoryGirl.create(:user) }
+        before { sign_in user }
 
-      it { should have_title(user.name) }
-      it { should have_link('Users',       href: users_path) }
-      it { should have_link('Profile',     href: user_path(user)) }
-      it { should have_link('Settings',    href: edit_user_path(user)) }
-      it { should have_link('Sign out',    href: signout_path) }
-      it { should_not have_link('Sign in', href: signin_path) }
+        it { should have_title(user.name) }
+        it { should have_link('Users',       href: users_path) }
+        it { should have_link('Profile',     href: user_path(user)) }
+        it { should have_link('Settings',    href: edit_user_path(user)) }
+        it { should have_link('Sign out',    href: signout_path) }
+        it { should_not have_link('Sign in', href: signin_path) }
 
-      describe "followed by signout" do
-        before { click_link "Sign out" }
-        it { should have_link('Sign in') }
+        describe "followed by signout" do
+          before { click_link "Sign out" }
+          it { should have_link('Sign in') }
+        end
+
+        describe "when attempting to visit signup page" do
+          before { visit signup_path }
+          it { expect(current_path).to eq(root_path) }
+        end
       end
 
-      describe "when attempting to visit signup page" do
-        before { visit signup_path }
-        it {
-          # p controller.response.body, controller.response.status
-          # p '000000000000000'
-          # should_not have_title('Sign up')
-          expect(current_path).to eq(root_path)
-           }
+      context 'Without email confirmation' do
+        let(:user) { FactoryGirl.create(:user_without_email_confirmation) }
+        before { sign_in user }
+          it { expect(current_path).to eq(root_path) }
+          it { should have_selector('div.alert.alert-error') }
+        end
       end
-
-      # describe "submitting a POST request to the Users#create action" do
-      #   before { post users_path }
-      #   specify { expect(current_path).to eq(root_path) }
-      # end
-
     end
-  end
+  # end
 
   describe "authorization" do
 
@@ -184,16 +183,12 @@ describe "Authentication" do
 
     describe "as admin" do
       let(:user) { FactoryGirl.create(:admin) }
-      before {
-        sign_in( user, no_capybara: true )
-        # post sessions_path, session: {email: user.email, password: 'foobar'}
-      }
+      before { sign_in( user, no_capybara: true ) }
 
       describe "not allow to delete admin" do
         before { delete user_path(user) }
         it { expect{ user.reload }.not_to raise_error }
       end
     end
-
   end
 end
