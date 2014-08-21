@@ -1,0 +1,7 @@
+<% provide(:title, 'RSS') %>
+<h1>RSS link</h1>
+
+<%= @rss_token %>
+<% @posts.each do |post| %>
+<%= post.content %>
+<% end %>

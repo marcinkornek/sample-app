@@ -12,4 +12,5 @@ User.create!(username: "mars",
              password: "foobar",
              password_confirmation: "foobar",
              admin: true,
-             state: 'verified')
+             state: 'verified',
+             rss_token: SecureRandom.urlsafe_base64)

@@ -20,6 +20,13 @@ class Micropost < ActiveRecord::Base
           user_id: user.id)
   end
 
+   def self.posts_for_feed_without_user_posts(user)
+    followed_user_ids = "SELECT followed_id FROM relationships
+                         WHERE follower_id = :user_id"
+    where("user_id IN (#{followed_user_ids} AND in_reply_to IS NULL) OR in_reply_to = :user_id",
+          user_id: user.id)
+  end
+
   def extract_mentioned_user
     # m = /^@(\w*(?:-\w+)*)/.match(content) # works for names with hyphens i.e. bob-abasa-asa
     m = /^@(\S*)/.match(content.downcase)

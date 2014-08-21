@@ -1,0 +1,31 @@
+<% provide(:title, "#{@micropost.user.name} micropost") %>
+
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= gravatar_for @micropost.user %>
+        <%= @micropost.user.name %>
+      </h1>
+    </section>
+    <section>
+      <%= render 'shared/stats' %>
+    </section>
+  </aside>
+  <div class="span8">
+    <%= render 'follow_form' if signed_in? %>
+    <% if @micropost.user.microposts.any? %>
+      <h3>Microposts (<%= @micropost.user.microposts.without_private_messages.count %>)</h3>
+      <ol class="microposts">
+        <li>
+          <span class="content"><%= wrap(@micropost.content) %></span>
+          <span class="timestamp">
+            Posted <%= time_ago_in_words(@micropost.created_at) %> ago.
+          </span>
+          <%= render 'shared/delete_micropost', micropost: @micropost %>
+        </li>
+      </ol>
+    <% end %>
+    <%= link_to "back to all microposts", user_path(@micropost.user) %>
+  </div>
+</div>

@@ -61,6 +61,10 @@ class User < ActiveRecord::Base
     Micropost.posts_for_feed(self)
   end
 
+  def feed_without_user_posts
+    Micropost.posts_for_feed_without_user_posts(self)
+  end
+
   def following?(other_user)
     relationships.find_by(followed_id: other_user.id)
   end
@@ -95,6 +99,10 @@ class User < ActiveRecord::Base
   def generate_activation_token
     update_column('activate_email_token', User.new_remember_token)
     update_column('activate_email_sent_at', Time.zone.now)
+  end
+
+  def generate_rss_token
+    update_column('rss_token', User.new_remember_token)
   end
 
 ###########################################################################

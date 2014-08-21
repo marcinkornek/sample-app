@@ -6,6 +6,7 @@ FactoryGirl.define do
     password "foobar"
     password_confirmation "foobar"
     state 'verified'
+    rss_token SecureRandom.urlsafe_base64
     factory :admin do
       admin true
     end
@@ -18,6 +19,7 @@ FactoryGirl.define do
     password "foobar"
     password_confirmation "foobar"
     state 'unverified'
+    rss_token SecureRandom.urlsafe_base64
   end
 
   factory :micropost do

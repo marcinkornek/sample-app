@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.send_activation_token
+      @user.generate_rss_token
       # sign_in @user
       # flash[:success] = "Welcome to the Sample App!"
       flash[:notice] = "Check your email to confirm registration!"
@@ -79,6 +80,17 @@ class UsersController < ApplicationController
     @users = @user.followers.paginate(page: params[:page], per_page: 10)
     @users_all = @user.followers.all
     render :show_follow
+  end
+
+  def rss
+    @user = User.find_by(rss_token: params[:rss_token] )
+    @rss_token = @user.rss_token
+    @posts = @user.feed_without_user_posts
+    @title = "#{@user.name} RSS"
+    respond_to do |format|
+      format.html {}
+      format.atom { render layout: false }
+    end
   end
 
   def activate_account

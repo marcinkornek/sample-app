@@ -1,5 +1,5 @@
 class MicropostsController < ApplicationController
-  before_action :signed_in_user,    only: [:create, :destroy]
+  before_action :signed_in_user,    only: [:create, :destroy, :show]
   before_action :correct_user,      only: [:destroy]
 
   def create
@@ -40,6 +40,13 @@ class MicropostsController < ApplicationController
       format.html {}
       format.atom { render layout: false }
     end
+  end
+
+  def show
+    @micropost = Micropost.without_private_messages.find(params[:id])
+    @user = @micropost.user
+
+
   end
 
 ############################################################################
