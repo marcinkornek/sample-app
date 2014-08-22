@@ -35,4 +35,14 @@ en:
   errors:
     messages:
       email_password: 'Invalid email/password or username/password combination'
-      unverified: 'User email is not verified. Please check your email to confirm registration.'
+      unverified: "User email is not verified. Please check your email to confirm registration. If you didn't got email click at link
+      <a href='%{link}'>reactivate password</a>"
+
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: 'has already been taken. If this is your email address, try <a href="%{link}">reset password</a> instead.'

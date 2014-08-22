@@ -14,15 +14,16 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
   # match '/users/:id/following', to: 'users#following', via: 'get'  # to można by dać zamiast resources :users do member do get :following end end
-  match '/signup',                  to: 'users#new',               via: 'get'
-  match '/signin',                  to: 'sessions#new',            via: 'get'
-  match '/signout',                 to: 'sessions#destroy',        via: 'delete'
-  match '/help',                    to: 'static_pages#help',       via: 'get'
-  match '/about',                   to: 'static_pages#about',      via: 'get'
-  match '/contact',                 to: 'static_pages#contact',    via: 'get'
-  match '/activate/:token',         to: 'users#activate_account',  via: 'get', as: :activate_account
-  match '/feed',                    to: 'microposts#index',        via: 'get', as: :feed,             defaults: { :format => 'atom' }
-  match '/rss/:rss_token',          to: 'users#rss',               via: 'get', as: :rss,              defaults: { :format => 'atom' }
+  match '/signup',                  to: 'users#new',                    via: 'get'
+  match '/signin',                  to: 'sessions#new',                 via: 'get'
+  match '/signout',                 to: 'sessions#destroy',             via: 'delete'
+  match '/help',                    to: 'static_pages#help',            via: 'get'
+  match '/about',                   to: 'static_pages#about',           via: 'get'
+  match '/contact',                 to: 'static_pages#contact',         via: 'get'
+  match '/activate/:token',         to: 'users#activate_account',       via: 'get', as: :activate_account
+  match '/reactivate/:id',          to: 'sessions#reactivate_account',  via: 'get', as: :reactivate
+  match '/feed',                    to: 'microposts#index',             via: 'get', as: :feed,             defaults: { :format => 'atom' }
+  match '/rss/:rss_token',          to: 'users#rss',                    via: 'get', as: :rss,              defaults: { :format => 'atom' }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

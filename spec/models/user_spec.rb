@@ -28,6 +28,11 @@ describe User do
   it { should respond_to(:followers) }
   it { should respond_to(:verify) }
   it { should respond_to(:unverify) }
+  it { should respond_to(:send_password_reset) }
+  it { should respond_to(:generate_password_reset_token) }
+  it { should respond_to(:send_activation_token) }
+  it { should respond_to(:generate_activation_token) }
+  it { should respond_to(:generate_rss_token) }
 
   it { should be_valid }
   it { should_not be_admin }

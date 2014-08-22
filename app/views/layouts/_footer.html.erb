@@ -9,7 +9,7 @@
       <li><%= link_to "Contact", contact_path %></li>
       <li><a href="http://news.railstutorial.org/">News</a></li>
       <% if signed_in? %>
-      <li><%= link_to image_tag("feed-icon-28x28.png", size: "28x28"), rss_path(@user.rss_token) %></li>
+      <li><%= link_to image_tag("feed-icon-28x28.png", size: "28x28"), rss_path(current_user.rss_token), id: 'rss' %></li>
       <% end %>
     </ul>
   </nav>

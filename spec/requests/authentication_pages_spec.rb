@@ -21,6 +21,7 @@ describe "Authentication" do
 
       it { should have_title('Sign in') }
       it { should have_selector('div.alert.alert-error') }
+      it { expect(page).not_to have_css("img[src*='feed-icon-28x28.png']")}
 
       describe "after visiting another page" do
         before { click_link "Home" }
@@ -39,6 +40,9 @@ describe "Authentication" do
         it { should have_link('Settings',    href: edit_user_path(user)) }
         it { should have_link('Sign out',    href: signout_path) }
         it { should_not have_link('Sign in', href: signin_path) }
+        it { expect(page).to have_css("img[src*='feed-icon-28x28.png']")}
+        it { expect(find("#rss")['href']).to eq(rss_path(user.rss_token)) }
+
 
         describe "followed by signout" do
           before { click_link "Sign out" }
@@ -54,12 +58,11 @@ describe "Authentication" do
       context 'Without email confirmation' do
         let(:user) { FactoryGirl.create(:user_without_email_confirmation) }
         before { sign_in user }
-          it { expect(current_path).to eq(root_path) }
+          it { expect(current_path).to eq(sessions_path) }
           it { should have_selector('div.alert.alert-error') }
         end
       end
     end
-  # end
 
   describe "authorization" do
 

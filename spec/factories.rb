@@ -10,16 +10,9 @@ FactoryGirl.define do
     factory :admin do
       admin true
     end
-  end
-
-  factory :user_without_email_confirmation do
-    sequence(:username)  { |n| "User_w_#{n}" }
-    sequence(:name)      { |n| "Person_w #{n}" }
-    sequence(:email)     { |n| "person_w_#{n}@example.com"}
-    password "foobar"
-    password_confirmation "foobar"
-    state 'unverified'
-    rss_token SecureRandom.urlsafe_base64
+    factory :user_without_email_confirmation do
+      state 'unverified'
+    end
   end
 
   factory :micropost do
@@ -27,3 +20,6 @@ FactoryGirl.define do
     user
   end
 end
+
+# factory :user <- user - nazwa klasy. Nie może być inaczej. jeśli chcemy zrobić inny przypadek to dodajemy go w środku j.w.
+

@@ -177,6 +177,29 @@ describe "MicropostPages" do
     end
   end
 
+  # check if logged out user can see microposts
+  describe 'Microposts' do
+    before do
+      @user = FactoryGirl.create(:user)
+      @micropost = FactoryGirl.create(:micropost, user: @user)
+    end
+
+    context 'when logged in' do
+      before do
+        visit micropost_path(@micropost)
+      end
+      it { should have_content(@micropost.content) }
+    end
+
+    context 'when logged out' do
+      before do
+        sign_out
+        visit micropost_path(@micropost)
+      end
+      it { should_not have_content(@micropost.content) }
+    end
+  end
+
 end
 
 

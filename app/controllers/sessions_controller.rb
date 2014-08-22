@@ -12,7 +12,7 @@ before_action :email?,  only: [:create]
         sign_in @user
         redirect_back_or @user
       else
-        @user.errors.add(:base, :unverified) #:invalid jest standardowym błędem, sa też inne, niestandardowe błędy można samemu wpisać w en.yml
+        @user.errors.add(:base, :unverified, link: Rails.application.routes.url_helpers.reactivate_path(@user.id))
         render 'new'
       end
     else
@@ -26,6 +26,13 @@ before_action :email?,  only: [:create]
     sign_out
     flash[:notice] = "You are signed out"
     redirect_to root_url
+  end
+
+  def reactivate_account
+    @user = User.find(params[:id])
+    @user.send_activation_token
+    flash[:notice] = "Confirmation email has been send again!"
+    render 'new'
   end
 
   ##########################################################################
