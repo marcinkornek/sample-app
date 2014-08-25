@@ -27,15 +27,15 @@ class UsersController < ApplicationController
 
   def index
     if params[:search]
-      @users = User.search(params[:search]).order("created_at DESC").paginate(page: params[:page], per_page: 30 )
+      @users = User.search(params[:search]).order("created_at DESC").paginate(page: params[:page], per_page: 10 )
     else
-      @users = User.order(:id).paginate(page: params[:page], per_page: 30 ) #bez "per_page: 30" domyślnie jest 30
+      @users = User.order(:id).paginate(page: params[:page], per_page: 10 ) #bez "per_page: 30" domyślnie jest 30
     end
   end
 
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.without_private_messages.paginate(page: params[:page], per_page: 20)
+    @microposts = @user.microposts.without_private_messages.paginate(page: params[:page], per_page: 10)
   end
 
   def edit
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
   def following
     @title = "Following"
     @user = User.find(params[:id])
-    @users = @user.followed_users.paginate(page: params[:page], per_page: 10)
+    @users = @user.followed_users.paginate(page: params[:page], per_page: 15)
     @users_all = @user.followed_users.all
     render :show_follow
   end
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   def followers
     @title = "Followers"
     @user = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page], per_page: 10)
+    @users = @user.followers.paginate(page: params[:page], per_page: 15)
     @users_all = @user.followers.all
     render :show_follow
   end
