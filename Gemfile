@@ -21,6 +21,9 @@ group :development, :test do
   gem 'childprocess', '0.3.6'
 end
 
+gem 'letter_opener_web', '~> 1.2.0',  :group => :development
+gem "letter_opener",                  :group => :development
+
 group :test do
   gem 'selenium-webdriver', '2.35.1'
   gem 'capybara', '2.1.0'

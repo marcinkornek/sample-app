@@ -19,21 +19,6 @@ class MicropostsController < ApplicationController
   end
 
   def index
-    #   # this will be the name of the feed displayed on the feed reader
-    # @title = "FEED title"
-
-    # # the news items
-    # # @feeds_items = current_user.feed.all.order("updated_at desc")
-    # @feeds_items = Micropost.all
-
-    # # this will be our Feed's update timestamp
-    # @updated = @feeds_items.first.updated_at unless @feeds_items.empty?
-
-    # respond_to do |format|
-    #   format.atom { render :layout => false }
-
-    # # we want the RSS feed to redirect permanently to the ATOM feed
-    # format.rss { redirect_to feed_path(:format => :atom), :status => :moved_permanently }
     @posts = Micropost.without_private_messages.all
 
     respond_to do |format|
@@ -45,8 +30,6 @@ class MicropostsController < ApplicationController
   def show
     @micropost = Micropost.without_private_messages.find(params[:id])
     @user = @micropost.user
-
-
   end
 
 ############################################################################

@@ -71,6 +71,7 @@ class User < ActiveRecord::Base
 
   def follow!(other_user)
     relationships.create!(followed_id: other_user.id)
+    UserMailer.follow_user(other_user, self).deliver
   end
 
   def unfollow!(other_user) # wywołuje się ją na instancji => user= User.first , user.unfollow!
