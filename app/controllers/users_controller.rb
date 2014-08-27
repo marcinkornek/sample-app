@@ -27,14 +27,14 @@ class UsersController < ApplicationController
 
   def index
     if params[:search]
-      @users = User.search(params[:search]).order("created_at DESC").paginate(page: params[:page], per_page: 10 )
+      @users = User.without_unverified_users.search(params[:search]).order("created_at DESC").paginate(page: params[:page], per_page: 10 )
     else
-      @users = User.order(:id).paginate(page: params[:page], per_page: 10 ) #bez "per_page: 30" domyślnie jest 30
+      @users = User.without_unverified_users.order(:id).paginate(page: params[:page], per_page: 10 ) #bez "per_page: 30" domyślnie jest 30
     end
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.without_unverified_users.find(params[:id])
     @microposts = @user.microposts.without_private_messages.paginate(page: params[:page], per_page: 10)
   end
 

@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   before_save { email.downcase! }
   before_save { username.downcase! }
   before_create :create_remember_token
+  scope :without_unverified_users, -> { where(state: 'verified') }
+
 
   validates :name,      presence: true,
                         length: { maximum: 50 }

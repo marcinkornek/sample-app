@@ -244,3 +244,17 @@ aside {
     margin-bottom: 5px;
   }
 }
+
+/* buttons */
+
+.endless_scrolling_button {
+  color: #006400;
+  box-shadow: 2px 6px 5px 0px rgba(50, 50, 50, 0.71);
+  border-radius: 0 0.9em;
+}
+
+/* remember me button - checkline in the same line */
+
+label {
+  display: inline-block;
+}

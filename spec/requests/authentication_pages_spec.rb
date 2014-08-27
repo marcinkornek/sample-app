@@ -29,7 +29,7 @@ describe "Authentication" do
       end
     end
 
-    describe "with valid information" do
+    describe "with valid information", focus: true do
       context 'After email confirmation' do
         let(:user) { FactoryGirl.create(:user) }
         before { sign_in user }
@@ -56,13 +56,24 @@ describe "Authentication" do
       end
 
       context 'Without email confirmation' do
-        let(:user) { FactoryGirl.create(:user_without_email_confirmation) }
-        before { sign_in user }
-          it { expect(current_path).to eq(sessions_path) }
-          it { should have_selector('div.alert.alert-error') }
+        let(:user_without_email_confirmation) { FactoryGirl.create(:user_without_email_confirmation) }
+        let(:user) { FactoryGirl.create(:user) }
+
+        before { sign_in user_without_email_confirmation }
+        it { expect(current_path).to eq(sessions_path) }
+        it { should have_selector('div.alert.alert-error') }
+
+        context "Other users can't see users without email confirmation" do
+          before do
+            sign_in user
+            visit users_path
+          end
+
+          it { should_not have_content(user_without_email_confirmation.name)}
         end
       end
     end
+  end
 
   describe "authorization" do
 

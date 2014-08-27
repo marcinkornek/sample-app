@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 window.enableScrolling = ->
-  if $('.pagination').length
+  if $('.pagination').length && $('.users').length
     $(window).scroll ->
       url = $('.pagination .next_page a').attr('href')
       if url && $(window).scrollTop() > $(document).height() - $(window).height() - 250 && url != '#'
@@ -16,8 +16,31 @@ window.enableScrolling = ->
 window.disableScrolling = ->
   $(window).off('scroll')
 
+window.hideMicropostsOnClick = ->
+  $('.hide_microposts').on 'click', ->
+    $('.microposts').toggle()
+
+window.userSearchAutocomplete = ->
+  $('#search').autocomplete
+    source: $('#search').data('autocomplete-source')
+    minLength: 2
+    autoFocus: true
+
+window.buttonEndlessScrolling = ->
+  $('.endless_scrolling_button').on 'click', ->
+    message = "Endless scrolling enabled"
+    $('.endless_scrolling_button').text(message)
+    enableScrolling()
+    console.log 'a'
+
+
 $ ->
-  enableScrolling()
+  # enableScrolling()
+  hideMicropostsOnClick()
+  jQuery("time.timeago").timeago()
+  userSearchAutocomplete()
+  buttonEndlessScrolling()
+
   # if $('.pagination').length
   #   $(window).scroll ->
   #     url = $('.pagination .next_page a').attr('href')
@@ -40,3 +63,4 @@ $ ->
 #   "Your answer is #{answer}"
 
 # alert coffee("Want some decaf?")
+
