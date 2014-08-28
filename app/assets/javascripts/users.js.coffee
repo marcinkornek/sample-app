@@ -19,6 +19,8 @@ window.disableScrolling = ->
 window.hideMicropostsOnClick = ->
   $('.hide_microposts').on 'click', ->
     $('.microposts').toggle()
+    $(this).toggleText("Hide microposts","Show microposts")
+
 
 window.userSearchAutocomplete = ->
   $('#search').autocomplete
@@ -26,41 +28,52 @@ window.userSearchAutocomplete = ->
     minLength: 2
     autoFocus: true
 
-window.buttonEndlessScrolling = ->
-  $('.endless_scrolling_button').on 'click', ->
-    message = "Endless scrolling enabled"
-    $('.endless_scrolling_button').text(message)
+window.buttonEnableEndlessScrolling = ->
+  $('.enable_scrolling_button').on 'click', ->
+    $(this).addClass('active')
     enableScrolling()
+    $('.disable_scrolling_button').removeClass('active')
     console.log 'a'
 
+window.buttonDisableEndlessScrolling = ->
+  $('.disable_scrolling_button').on 'click', ->
+    $(this).addClass('active')
+    disableScrolling()
+    $('.enable_scrolling_button').removeClass('active')
+    console.log 'b'
+
+window.changeNavbarColor = ->
+  $('.change-navbar-color').on 'click', ->
+    $(this).toggleClass('active')
+    $('#logo').toggleClass('active')
+    $(this).toggleText("black","gray")
+    navbar = $('.navbar.navbar-fixed-top')
+    if  navbar.hasClass('navbar-inverse')
+      navbar.removeClass('navbar-inverse')
+      navbar.addClass('navbar-default')
+      $.cookie('navbar_color', 'gray', { path: '/' });
+    else
+      navbar.removeClass('navbar-default')
+      navbar.addClass('navbar-inverse')
+      $.cookie('navbar_color', 'black', { path: '/' });
+    console.log 'c'
+
+window.checkNavbarColor = ->
+  navbar = $('.navbar.navbar-fixed-top')
+  button = $('.change-navbar-color')
+  if $.cookie('navbar_color') == 'gray'
+    navbar.removeClass('navbar-inverse')
+    navbar.addClass('navbar-default')
+    button.toggleClass('active')
+    button.text("black")
+    $('#logo').toggleClass('active')
+  console.log 'd'
 
 $ ->
-  # enableScrolling()
   hideMicropostsOnClick()
   jQuery("time.timeago").timeago()
   userSearchAutocomplete()
-  buttonEndlessScrolling()
-
-  # if $('.pagination').length
-  #   $(window).scroll ->
-  #     url = $('.pagination .next_page a').attr('href')
-  #     if url && $(window).scrollTop() > $(document).height() - $(window).height() - 250
-  #       $('pagination').text("Fetching more users...")
-  #       console.log url
-  #       $.getScript(url)
-  #   $(window).scroll
-
-# window.greet = (message, message2) ->
-#   alert "#{message} #{message2} "
-
-# greet("asd", "pol")
-
-# # window.greet = (name="Stranger") ->
-#   # alert "#{name}"
-
-# window.coffee = (message = "Ready for some coffee?") ->
-#   answer = confirm message
-#   "Your answer is #{answer}"
-
-# alert coffee("Want some decaf?")
-
+  buttonEnableEndlessScrolling()
+  buttonDisableEndlessScrolling()
+  changeNavbarColor()
+  checkNavbarColor()

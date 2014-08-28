@@ -79,6 +79,10 @@ p {
     color: white;
     text-decoration: none;
   }
+  &.active{
+    color: black;
+  }
+
 }
 
 /* footer */
@@ -247,10 +251,38 @@ aside {
 
 /* buttons */
 
-.endless_scrolling_button {
-  color: #006400;
-  box-shadow: 2px 6px 5px 0px rgba(50, 50, 50, 0.71);
-  border-radius: 0 0.9em;
+button {
+  padding: 2px 8px;
+  color: black;
+  border-width: 2px;
+}
+
+.enable_scrolling_button {
+  &.active {
+    color: white;
+    background-color: green;
+    border-color: green;
+
+  }
+}
+
+.disable_scrolling_button {
+
+  &.active {
+    color: white;
+    background-color: red;
+    border-color: red;
+  }
+}
+
+.change-navbar-color {
+  height: 40px;
+  width: 50px;
+  &.active {
+    background-color: black;
+    color: white;
+    border-color: black;
+  }
 }
 
 /* remember me button - checkline in the same line */
@@ -258,3 +290,4 @@ aside {
 label {
   display: inline-block;
 }
+

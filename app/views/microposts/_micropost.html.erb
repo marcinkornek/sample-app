@@ -1,7 +1,7 @@
 <li>
   <span class="content"><%= wrap(micropost.content) %></span>
   <span class="timestamp">
-    <%= time_tag(micropost.created_at, class:"timeago") %>
+    Posted <%= time_tag(micropost.created_at, class:"timeago") %>
   </span>
   <%= render 'shared/delete_micropost', micropost: micropost %>
 </li>

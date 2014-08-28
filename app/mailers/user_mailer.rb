@@ -19,7 +19,7 @@ class UserMailer < ActionMailer::Base
   def follow_user(user, current_user)
     @user = user
     @current_user = current_user
-    mail to: user.email, subject: "New fallower"
+    mail to: user.email, subject: "New follower"
   end
 
 end

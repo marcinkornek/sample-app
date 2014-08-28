@@ -5,7 +5,7 @@
     </span>
     <span class="content"><%= wrap(feed_item.content) %></span>
     <span class="timestamp">
-    <%= time_tag(feed_item.created_at, class:"timeago") %>
+      Posted <%= time_tag(feed_item.created_at, class:"timeago") %>
 
     </span>
   <%= render 'shared/delete_micropost', micropost: feed_item %>
