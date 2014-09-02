@@ -11,10 +11,10 @@
   <% end %>
   <div class="field">
     <%= f.label :password, class: 'display-block' %>
-    <%= f.password_field :password, class: 'small-margin-right medium-width' %>
+    <%= f.password_field :password, class: 'small-margin-right medium-width password_strength_enabled' %>
   </div>
   <div class="field">
-    <%= f.label :password_confirmation, class: 'display-block' %>
+    <%= f.label :password_confirmation, class: 'display-block'  %>
     <%= f.password_field :password_confirmation, class: 'small-margin-right medium-width' %>
   </div>
   <div class="actions"><%= f.submit "Update Password" %></div>

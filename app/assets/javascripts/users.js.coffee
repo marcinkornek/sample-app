@@ -109,7 +109,7 @@ $ ->
   # renderAlert()
   showHideUsersButton()
   # disableSubmitButton()
-  $('#user_password').pwstrength({
+  $('.password_strength_enabled').pwstrength({
       ui: {bootstrap2: true},
       # ui: {showVerdictsInsideProgressBar: true},
       ui: {showProgressBar: false}
