@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # get 'password_resets/new'
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
@@ -10,10 +9,10 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
-  resources :sessions,      only: [:new, :create, :destroy]
-  resources :microposts,    only: [:create, :destroy, :show]
-  resources :relationships, only: [:create, :destroy]
-  resources :password_resets
+  resources :sessions,        only: [:new, :create, :destroy]
+  resources :microposts,      only: [:create, :destroy, :show]
+  resources :relationships,   only: [:create, :destroy]
+  resources :password_resets, only: [:create, :edit, :update, :new]
   resources :feed_items
 
   root 'static_pages#home'
@@ -28,6 +27,8 @@ Rails.application.routes.draw do
   match '/reactivate/:id',          to: 'sessions#reactivate_account',  via: 'get', as: :reactivate
   match '/feed',                    to: 'microposts#index',             via: 'get', as: :feed,             defaults: { :format => 'atom' }
   match '/rss/:rss_token',          to: 'users#rss',                    via: 'get', as: :rss,              defaults: { :format => 'atom' }
+  match '/prs',                     to: 'password_resets#new',          via: 'get'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

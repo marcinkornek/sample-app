@@ -6,7 +6,7 @@
     <%= form_for(@user, url: sessions_path, method: :post) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <%= f.label :email, 'Email/Username' %>
-      <%= f.text_field :email %>
+      <%= f.text_field :email, autofocus: true %>
 
       <%= f.label :password %>
       <%= f.password_field :password %>

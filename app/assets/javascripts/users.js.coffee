@@ -115,4 +115,5 @@ $ ->
       ui: {showProgressBar: false}
       common: {usernameField: '#user_username'}
   })
+  showSubmitButtonWhenText()
   $('#user_username').on("input", showSubmitButtonWhenText)

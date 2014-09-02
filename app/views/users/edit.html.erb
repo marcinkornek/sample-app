@@ -6,8 +6,9 @@
     <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <%= render 'fields_update', f: f %>
-      <%= link_to "change password", '#' %>
 
+      <%= link_to "change password", '#' %>
+      <br>
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
 
