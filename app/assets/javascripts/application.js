@@ -17,6 +17,7 @@
 //= require jquery-ui/autocomplete
 //= require jquery.cookie
 //= require bootstrap
+//= require pwstrength
 //= require turbolinks
 //= require_tree ./helpers
 //= require_tree .

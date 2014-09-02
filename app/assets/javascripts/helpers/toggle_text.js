@@ -4,3 +4,4 @@ $.fn.extend({
     else { this.text(a) }
   }
 });
+

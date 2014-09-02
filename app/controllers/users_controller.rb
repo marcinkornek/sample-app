@@ -114,7 +114,7 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:username, :name, :email, :password,
-                                   :password_confirmation)
+                                   :password_confirmation, :send_new_follower_email)
     end
 
     # Before filters

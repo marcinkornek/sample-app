@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(?:\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email,     presence: true,
                         format: { with: VALID_EMAIL_REGEX },
-                        uniqueness: { case_sensitive: false, link: 'Rails.application.routes.url_helpers.new_password_reset_path' }
+                        uniqueness: { case_sensitive: false, link: Rails.application.routes.url_helpers.new_password_reset_path }
   validates :password,  length: { minimum: 6 }#, if: lambda {|u| u.password.present?}
 
   state_machine :state, :initial => :unverified, :action => :bypass_validation do
@@ -73,6 +73,10 @@ class User < ActiveRecord::Base
 
   def follow!(other_user)
     relationships.create!(followed_id: other_user.id)
+    send_new_follower_email_method(other_user) unless other_user.send_new_follower_email == false
+  end
+
+  def send_new_follower_email_method(other_user)
     UserMailer.follow_user(other_user, self).deliver
   end
 

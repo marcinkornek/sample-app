@@ -9,3 +9,6 @@
 
 <%= f.label :password %>
 <%= f.password_field :password %>
+
+<%= f.label :send_new_follower_email, "Send me email with new followers" %>
+<%= f.check_box :send_new_follower_email, {}, 'true', 'false' %> <br>

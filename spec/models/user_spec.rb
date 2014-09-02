@@ -33,6 +33,7 @@ describe User do
   it { should respond_to(:send_activation_token) }
   it { should respond_to(:generate_activation_token) }
   it { should respond_to(:generate_rss_token) }
+  it { should respond_to(:send_new_follower_email_method) }
 
   it { should be_valid }
   it { should_not be_admin }

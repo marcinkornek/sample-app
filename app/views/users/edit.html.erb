@@ -6,10 +6,12 @@
     <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <%= render 'fields_update', f: f %>
+      <%= link_to "change password", '#' %>
+
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
 
     <%= gravatar_for @user %>
-    <a href="http://gravatar.com/emails" TARGET="_blank">change</a>
+    <a href="http://gravatar.com/emails" TARGET="_blank">change gravatar</a>
   </div>
 </div>

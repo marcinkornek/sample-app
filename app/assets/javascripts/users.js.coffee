@@ -69,6 +69,35 @@ window.checkNavbarColor = ->
     $('#logo').toggleClass('active')
   console.log 'd'
 
+  window.renderAlert = ->
+    alert "buu"
+
+  # window.hideUsers = ->
+
+  window.showHideUsersButton = ->
+    $("#one").on 'click', ->
+      if $('#two').prop('disabled')
+        console.log 'active'
+        $('#two').prop('disabled', false)
+        $('#two').val('hide users')
+      else
+        $('#two').prop('disabled', true)
+        console.log 'inactive'
+        $('.users').show()
+        $('#two').val('hide users')
+      $("#two").on 'click', ->
+          $(this).toggleValue('hide users', 'show users')
+          $('.users').toggle()
+
+  window.showSubmitButtonWhenText = ->
+    if $('#user_username').val().length > 0
+      $('input[type=submit]').prop("disabled", false)
+      console.log 'false'
+    else
+      $('input[type=submit]').prop("disabled", true)
+      console.log 'true'
+
+
 $ ->
   hideMicropostsOnClick()
   jQuery("time.timeago").timeago()
@@ -77,3 +106,13 @@ $ ->
   buttonDisableEndlessScrolling()
   changeNavbarColor()
   checkNavbarColor()
+  # renderAlert()
+  showHideUsersButton()
+  # disableSubmitButton()
+  $('#user_password').pwstrength({
+      ui: {bootstrap2: true},
+      # ui: {showVerdictsInsideProgressBar: true},
+      ui: {showProgressBar: false}
+      common: {usernameField: '#user_username'}
+  })
+  $('#user_username').on("input", showSubmitButtonWhenText)

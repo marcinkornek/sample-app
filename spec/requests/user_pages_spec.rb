@@ -211,6 +211,15 @@ describe "User pages" do
       it { should have_link('Sign out', href: signout_path) }
       specify { expect(user.reload.name).to  eq new_name }
       specify { expect(user.reload.email).to eq new_email }
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+      # context "with 'Send me email with new followers' unchecked" do
+      #   before do
+      #     find(:css, "#user_send_new_follower_email").set(false)
+      #     click_button "Save changes"
+      #   end
+      # end
     end
 
     describe "forbidden attributes" do

@@ -29,7 +29,7 @@ describe "Authentication" do
       end
     end
 
-    describe "with valid information", focus: true do
+    describe "with valid information" do
       context 'After email confirmation' do
         let(:user) { FactoryGirl.create(:user) }
         before { sign_in user }

@@ -22,10 +22,10 @@
 en:
   hello: "Hello world"
 
-  helpers:
-    label:
-      session:
-        email: 'Email/Username'
+  # helpers:
+  #   label:
+  #     session:
+  #       email: 'Email/Username'
 
 # własne errory
   # errors:
