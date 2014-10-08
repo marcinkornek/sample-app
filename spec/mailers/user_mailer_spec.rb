@@ -10,13 +10,13 @@ describe UserMailer do
     let(:mail) { UserMailer.password_reset(@user) }
 
     it "renders the headers" do
-      mail.subject.should eq("Password reset")
-      mail.to.should eq([@user.email])
-      mail.from.should eq(["from@example.com"])
+      expect(mail.subject).to eq("Password reset")
+      expect(mail.to).to eq([@user.email])
+      expect(mail.from).to eq(["from@example.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("To reset your password, click the URL below.")
+      expect(mail.body.encoded).to match("To reset your password, click the URL below.")
     end
   end
 
@@ -28,13 +28,13 @@ describe UserMailer do
     let(:mail) { UserMailer.confirm_email(@user) }
 
     it "renders the headers" do
-      mail.subject.should eq("Email confirmation")
-      mail.to.should eq([@user.email])
-      mail.from.should eq(["from@example.com"])
+      expect(mail.subject).to eq("Email confirmation")
+      expect(mail.to).to eq([@user.email])
+      expect(mail.from).to eq(["from@example.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("To confirm your email, click the URL below.")
+      expect(mail.body.encoded).to match("To confirm your email, click the URL below.")
     end
   end
 

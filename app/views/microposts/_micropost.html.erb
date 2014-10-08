@@ -1,5 +1,5 @@
 <li>
-  <span class="content"><%= wrap(micropost.content) %></span>
+  <span class="content"><%= raw(micropost.content) %></span>
   <span class="timestamp">
     Posted <%= time_tag(micropost.created_at, class:"timeago") %>
   </span>

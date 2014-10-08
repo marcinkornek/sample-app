@@ -23,9 +23,9 @@ describe "User pages" do
 
       it "should list each user" do
         # puts page.html
-        User.paginate(page: 1).each do |user|
+        User.paginate(page: 1, per_page: 10).each do |user|
 
-          # puts user.name
+          puts user.name
           expect(page).to have_selector('li', text: user.name)
           expect(page).to have_selector('li', text: user.microposts.count)
         end

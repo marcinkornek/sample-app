@@ -69,33 +69,42 @@ window.checkNavbarColor = ->
     $('#logo').toggleClass('active')
   console.log 'd'
 
-  window.renderAlert = ->
-    alert "buu"
+window.renderAlert = ->
+  alert "buu"
 
-  # window.hideUsers = ->
+# window.hideUsers = ->
 
-  window.showHideUsersButton = ->
-    $("#one").on 'click', ->
-      if $('#two').prop('disabled')
-        console.log 'active'
-        $('#two').prop('disabled', false)
-        $('#two').val('hide users')
-      else
-        $('#two').prop('disabled', true)
-        console.log 'inactive'
-        $('.users').show()
-        $('#two').val('hide users')
-      $("#two").on 'click', ->
-          $(this).toggleValue('hide users', 'show users')
-          $('.users').toggle()
-
-  window.showSubmitButtonWhenText = ->
-    if $('#user_username').val().length > 0
-      $('input[type=submit]').prop("disabled", false)
-      console.log 'false'
+window.showHideUsersButton = ->
+  $("#one").on 'click', ->
+    if $('#two').prop('disabled')
+      console.log 'active'
+      $('#two').prop('disabled', false)
+      $('#two').val('hide users')
     else
-      $('input[type=submit]').prop("disabled", true)
-      console.log 'true'
+      $('#two').prop('disabled', true)
+      console.log 'inactive'
+      $('.users').show()
+      $('#two').val('hide users')
+    $("#two").on 'click', ->
+        $(this).toggleValue('hide users', 'show users')
+        $('.users').toggle()
+
+window.showSubmitButtonWhenText = ->
+  if $('#user_username').val().length > 0
+    $('input[type=submit]').prop("disabled", false)
+    console.log 'false'
+  else
+    $('input[type=submit]').prop("disabled", true)
+    console.log 'true'
+
+window.showVideo = ->
+  $('#first_button').on 'click', ->
+    $('video').hide()
+    $('#first_video').show()
+  $('#second_button').on 'click', ->
+    $('video').hide()
+    $('#second_video').show()
+
 
 
 $ ->
@@ -115,5 +124,6 @@ $ ->
       ui: {showProgressBar: false}
       common: {usernameField: '#user_username'}
   })
-  showSubmitButtonWhenText()
+  # showSubmitButtonWhenText()
   $('#user_username').on("input", showSubmitButtonWhenText)
+  showVideo()

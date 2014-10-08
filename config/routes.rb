@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   match '/signin',                  to: 'sessions#new',                 via: 'get'
   match '/signout',                 to: 'sessions#destroy',             via: 'delete'
   match '/help',                    to: 'static_pages#help',            via: 'get'
+  match '/video',                   to: 'static_pages#video',           via: 'get'
   match '/about',                   to: 'static_pages#about',           via: 'get'
   match '/contact',                 to: 'static_pages#contact',         via: 'get'
   match '/activate/:token',         to: 'users#activate_account',       via: 'get', as: :activate_account

@@ -1,8 +1,46 @@
 <% provide(:title, 'About Us') %>
+
 <h1>About Us</h1>
-<p>
-  The <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
-  is a project to make a book and screencasts to teach web development
-  with <a href="http://rubyonrails.org/">Ruby on Rails</a>. This
-  is the sample application for the tutorial.
-</p>
+ <div class="row">
+   <div class="span2 align-center" style="margin-left: 40px">
+      <%= image_tag 'rails.png', {alt: "Ruby on Rails"} %>
+    </div>
+    <div class="span9">
+      <p>
+        The <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
+        is a project to make a book and screencasts to teach web development
+        with <a href="http://rubyonrails.org/">Ruby on Rails</a>. This
+        is the sample application for the tutorial.
+      </p>
+    </div>
+  </div>
+
+<h1> About me </h1>
+
+  <div class="clearfix">
+    <div class="span2 align-center" >
+      <%= image_tag 'about.jpg', {size: "101x139", alt: "My photo"} %>
+    </div>
+    <div class="span9">
+       'My name is Marcin Kornek. I am Master of Science in Civil Engineering.'
+      <br/>
+       'After 5 years studies I decided to quit Civil Engineering and to start programming.'
+      <br/>
+        'A day after graduation I started to learn Ruby and then Ruby on Rails and other similiars languages such like:.'
+      <br/>
+      <li> 'HTML' </li>
+      <li> 'CSS' </li>
+      <li> 'JavaScript' </li>
+      <li> 'CoffeeScript' </li>
+      <li> 'SQL' </li>
+
+      <br/>
+
+      'I learnt mainly from:'
+      <li> <%= link_to 'Learn to Program by Chris Pine',  'https://pine.fm/LearnToProgram' %> </li>
+      <li> <%= link_to "Ruby on Rails Tutorial - Learn Rails by Example by Michale Hartl ", 'http://www.railstutorial.org' %> </li>
+      <li> <%= link_to "RailsCasts - Ruby on Rails Screencasts by Ryan Bates ", 'http://railscasts.com' %> </li>
+      <li> <%= link_to "CodeSchool ", 'https://www.codeschool.com' %> </li>
+      <li> <%= link_to 'w3schools', 'http://www.w3schools.com' %> </li>
+    </div>
+  </div>
