@@ -97,13 +97,13 @@ window.showSubmitButtonWhenText = ->
     $('input[type=submit]').prop("disabled", true)
     console.log 'true'
 
-window.showVideo = ->
-  $('#first_button').on 'click', ->
-    $('video').hide()
-    $('#first_video').show()
-  $('#second_button').on 'click', ->
-    $('video').hide()
-    $('#second_video').show()
+# window.showVideo = ->
+#   $('#first_button').on 'click', ->
+#     $('video').hide()
+#     $('#first_video').show()
+#   $('#second_button').on 'click', ->
+#     $('video').hide()
+#     $('#second_video').show()
 
 
 
