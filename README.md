@@ -7,28 +7,22 @@ by [Michael Hartl](http://www.michaelhartl.com/).
 ## I added extensions to the sample application proposed in last chapter:
 
 1. Replies
-
-    users can send private messages to each other using @username before message (i.e. "@username_1 Hi buddy" is visible only for user with username: "username_1" )
+  users can send private messages to each other using @username before message (i.e. "@username_1 Hi buddy" is visible only for user with username: "username_1" )
 
 2. Follower notifications
-
-    Users receive an email notification when they gain a new follower, users can disable this option in account settings
+  Users receive an email notification when they gain a new follower, users can disable this option in account settings
 
 3. Password reminders
-
-    In this tutorial app authorization is written from scratch. Users can reset their password.
+  In this tutorial app authorization is written from scratch. Users can reset their password.
 
 4. Signup confirmation
-
-    After creating new account users have to confirm their email before sign in.
+  After creating new account users have to confirm their email before sign in.
 
 5. RSS feed
-
-    Users can read microposts from followed users via RSS and Atom.
+  Users can read microposts from followed users via RSS and Atom.
 
 6. Search
-
-    Users can be searched.
+  Users can be searched.
 
 ## A also added more extensions:
 1. video player
