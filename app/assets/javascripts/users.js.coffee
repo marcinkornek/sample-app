@@ -8,7 +8,7 @@ window.enableScrolling = ->
       if url && $(window).scrollTop() > $(document).height() - $(window).height() - 250 && url != '#'
         $('.pagination').text("Fetching more users...")
         return if window.loadingUsers
-        console.log url
+        # console.log url
         window.loadingUsers = true
         $.getScript(url).done(-> window.loadingUsers = false)
     $(window).scroll
@@ -33,14 +33,14 @@ window.buttonEnableEndlessScrolling = ->
     $(this).addClass('active')
     enableScrolling()
     $('.disable_scrolling_button').removeClass('active')
-    console.log 'a'
+    # console.log 'a'
 
 window.buttonDisableEndlessScrolling = ->
   $('.disable_scrolling_button').on 'click', ->
     $(this).addClass('active')
     disableScrolling()
     $('.enable_scrolling_button').removeClass('active')
-    console.log 'b'
+    # console.log 'b'
 
 window.changeNavbarColor = ->
   $('.change-navbar-color').on 'click', ->
@@ -56,7 +56,7 @@ window.changeNavbarColor = ->
       navbar.removeClass('navbar-default')
       navbar.addClass('navbar-inverse')
       $.cookie('navbar_color', 'black', { path: '/' });
-    console.log 'c'
+    # console.log 'c'
 
 window.checkNavbarColor = ->
   navbar = $('.navbar.navbar-fixed-top')
@@ -67,7 +67,7 @@ window.checkNavbarColor = ->
     button.toggleClass('active')
     button.text("black")
     $('#logo').toggleClass('active')
-  console.log 'd'
+  # console.log 'd'
 
 window.renderAlert = ->
   alert "buu"
@@ -115,15 +115,10 @@ $ ->
   buttonDisableEndlessScrolling()
   changeNavbarColor()
   checkNavbarColor()
-  # renderAlert()
   showHideUsersButton()
-  # disableSubmitButton()
   $('.password_strength_enabled').pwstrength({
       ui: {bootstrap2: true},
-      # ui: {showVerdictsInsideProgressBar: true},
       ui: {showProgressBar: false}
       common: {usernameField: '#user_username'}
   })
-  # showSubmitButtonWhenText()
   $('#user_username').on("input", showSubmitButtonWhenText)
-  showVideo()
